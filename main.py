@@ -27,6 +27,7 @@ if __name__ == '__main__':
     # Initializing connection via MAVLink
     the_connection = mav.establish_heartbeat('udpin:localhost:14541')
 
+    mav.clear_mission(the_connection) # Clearing previous mission
 
     # Declaring variables used for starting path planning when new home is detected
     previoushome = [0,0]
@@ -40,7 +41,7 @@ if __name__ == '__main__':
             print('Path planning - Destination request received.')
             start_pathplanning = False # Setting start_pathplanning variable to false
 
-            print('Path planning - ERROR! To prevent unintensional behaviour upon startup, please identify desired end-point again.')
+            print('Path planning - ERROR! To prevent unintentional behaviour upon startup, please identify desired end-point again.')
             first_run = False
 
 
@@ -61,7 +62,6 @@ if __name__ == '__main__':
             # Defining map size and center
             size   = [args.size_single, args.size_single]
             center = [utm33_current_position[0] - size[0]/2, utm33_current_position[1] - size[1]/2] # Centered on current position
-            center            = [269605.54,7043927.99]
             uf.configure_enc(setting_path, center=center, size=size) # Updating .yaml file
 
             # Define pathplanning start/end (grid coordinates)           
