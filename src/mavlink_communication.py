@@ -18,6 +18,19 @@ def ack(the_connection, keyword):
     print(f'\t MAVLINK - ACK - Message read: {str(the_connection.recv_match(type=keyword, blocking=True, timeout=1))}')
 
 
+def establish_heartbeat(udp):
+    # Start a connection listening to a UDP port
+    print('MAVLINK - Trying to establish connection...')
+    the_connection = mavutil.mavlink_connection(udp)
+
+    # Wait for the first heartbeat
+    #  This sets the system and component ID of remote systemf or the link
+    the_connection.wait_heartbeat()
+    print('MAVLINK - Heartbeat from the system (system %u component %u)' % 
+        (the_connection.target_system, the_connection.target_component))
+    return the_connection
+
+
 def arm_disarm(the_connection, param):
     ''' Arms or disarms the boat the boat. 
         params:
@@ -33,6 +46,18 @@ def arm_disarm(the_connection, param):
 def get_gps(the_connection):
     ''' Returns the latest GPS reading.'''
     return the_connection.recv_match(type='GLOBAL_POSITION_INT',blocking=True, timeout=1)
+
+
+def wait_for_gps(the_connection):
+    ''' Loops until GPS message has been read successfully.
+        Considers (latitude = 0, longitude = 0) as invalid coordinates.
+        Returns GPS-message
+    '''
+    # Fetching GPS coordinates from MAVLink
+    gps = None
+    while gps == None or (gps.lat == 0) or (gps.lon == 0):
+        gps = the_connection.recv_match(type='GLOBAL_POSITION_INT',blocking=True)
+    return gps
 
 
 def set_mode(the_connection, MAV_MODE):

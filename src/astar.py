@@ -15,8 +15,10 @@ Modified and implemented into this project by Stian Bernhardsen
 '''
 ##############################################################
 
-def visualize_search(grid, closedlist,size):
-    ''' Visualizing progress of pathfinding. Displays the contents of the closedlist.'''
+def visualize_search(grid, closedlist, size):
+    ''' Visualizing progress of pathfinding. 
+        Displays the contents of the closedlist in a plot saved in /data/astar_closedlist
+    '''
     grid_with_path = np.rot90(np.flip(np.array(grid),0),3) # Flipping & Rotating the map 270* to make it match the  coordinates system
     x = []
     y = []
@@ -27,7 +29,7 @@ def visualize_search(grid, closedlist,size):
     plt.xlim(0,size[0])
     plt.ylim(0,size[1])
     plt.imshow(grid_with_path, cmap='Greys')
-    plt.savefig("./data/%s.png"%'pciture', dpi=300, bbox_inches='tight', pad_inches=0)
+    plt.savefig("./data/%s.png"%'astar_closedlist', dpi=300, bbox_inches='tight', pad_inches=0)
     plt.close()
 
 
