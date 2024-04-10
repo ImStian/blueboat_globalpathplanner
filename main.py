@@ -29,15 +29,26 @@ if __name__ == '__main__':
 
 
     # Declaring variables used for starting path planning when new home is detected
-    previoushome = mav.read_homelocation(the_connection)  # Fetching desired position of vehicle (home position)
+    previoushome = [0,0]
     start_pathplanning = False
+    first_run = True
 
+    print('General - Click "Pathfind to location" (change home) in QGC to start.')
     while True:
-
-        if start_pathplanning: # If home has been updated
+        # Adding extra check to prevent pathplanning from starting instantly upon running script:
+        if start_pathplanning and first_run: # If home has been updated
             print('Path planning - Destination request received.')
             start_pathplanning = False # Setting start_pathplanning variable to false
 
+            print('Path planning - ERROR! To prevent unintensional behaviour upon startup, please identify desired end-point again.')
+            first_run = False
+
+
+        if start_pathplanning and not first_run: # If home has been updated
+            print('Path planning - Destination request received.')
+            start_pathplanning = False # Setting start_pathplanning variable to false
+
+            
 
             # Fetching current position of vehicle
             gps = mav.wait_for_gps(the_connection)
@@ -48,8 +59,9 @@ if __name__ == '__main__':
             utm33_home_position    = cc.utm33_to_wgs84(home[0] / 10**7, home[1] / 10**7, inverse=True)
 
             # Defining map size and center
-            size = [args.size_single, args.size_single]
+            size   = [args.size_single, args.size_single]
             center = [utm33_current_position[0] - size[0]/2, utm33_current_position[1] - size[1]/2] # Centered on current position
+            center            = [269605.54,7043927.99]
             uf.configure_enc(setting_path, center=center, size=size) # Updating .yaml file
 
             # Define pathplanning start/end (grid coordinates)           
@@ -60,7 +72,10 @@ if __name__ == '__main__':
             end_coordinates   = (grid_home_location[0], grid_home_location[1])
 
             # Extracting map data using SeaCharts:
+            print(f'\nmapdata_path: {mapdata_path}\n center: {center}\n')
             mp.extract_map_data(mapdata_path, center)
+            polygons, polygons_coords = mp.prepare_map_polygons_coords(mapdata_path)
+            mp.map_visualization(polygons_coords, saveas='map_visualization')
 
             # Generating occupancy grid:
             occupancy_grid, coords = mp.occupancy_grid_map(mapdata_path, size, buffer_size=3, visualize=True, saveas='occupancy_grid')
@@ -111,6 +126,6 @@ if __name__ == '__main__':
                 start_pathplanning = True
                 previoushome = home
 
-           time.sleep(1)
+           time.sleep(0.2)
 
 

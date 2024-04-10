@@ -126,7 +126,7 @@ def read_homelocation(the_connection):
     '''
     the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component,
                                         mavutil.mavlink.MAV_CMD_REQUEST_MESSAGE, 0, 242, 0, 0, 0, 0, 0, 0)
-    ack(the_connection, "COMMAND_ACK")
+    #ack(the_connection, "COMMAND_ACK") Enable for debugging of homelocation check, otherwise leave commented out
     home_location = the_connection.recv_match(type=['HOME_POSITION'],blocking=True, timeout=1)
     latitude  = home_location.latitude  # Latitude 10^7
     longitude = home_location.longitude # Longitude 10^7
