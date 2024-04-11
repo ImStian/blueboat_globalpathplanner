@@ -25,7 +25,8 @@ def extract_map_data(path, center, new_data=False):
     '''
       # ENC config
     enc = ENC(config='map_settings.yaml')
-    enc.update()
+    if new_data:
+        enc.update() # Updating enc
     algo_start = time.time()
     print('Map Function - Extracting map data.')
     # Land polygons

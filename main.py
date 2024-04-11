@@ -65,8 +65,9 @@ if __name__ == '__main__':
 
             # Defining map size and center
             size   = [args.size_single, args.size_single]
-            center = [utm33_current_position[0] , utm33_current_position[1]] # Centered on current position
-            uf.configure_enc(setting_path, center=center, size=size) # Updating .yaml file
+            center =  [utm33_current_position[0] - size[0]/2, utm33_current_position[1] - size[1]/2] # Centered on current position
+            center_enc = [utm33_current_position[0] , utm33_current_position[1]] # Centered on current position
+            uf.configure_enc(setting_path, center=center_enc, size=size) # Updating .yaml file
 
             # Define pathplanning start/end (grid coordinates)           
             grid_current_position = cc.utm33_to_grid(utm33_current_position[0], utm33_current_position[1], size, center)
@@ -82,13 +83,7 @@ if __name__ == '__main__':
             end_coordinates   = (grid_home_location[0], grid_home_location[1])
 
             # Extracting map data using SeaCharts:
-
-            enc = ENC(config='map_settings.yaml')
-            enc.update()
-            enc.display.show()
-
-
-            mp.extract_map_data(mapdata_path, center)
+            mp.extract_map_data(mapdata_path, center, new_data=True)
             #polygons, polygons_coords = mp.prepare_map_polygons_coords(mapdata_path)
             #mp.map_visualization(polygons_coords, saveas='map_visualization')
 
