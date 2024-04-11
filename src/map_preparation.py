@@ -17,7 +17,7 @@ csv.field_size_limit(sys.maxsize) # ups the writing limit for csvfiles
     The overall structure of the code however, remains the same.
 '''
 
-def extract_map_data(path, center):
+def extract_map_data(path, center, new_data=False):
     '''
         Extracts land data from .gdb file
         Dependencies: None

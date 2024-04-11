@@ -4,6 +4,7 @@ import src.map_preparation as mp
 import src.util_functions as uf
 import src.rrtstar as rrtstar
 import src.astar as astar
+import math as m
 import argparse
 import time
 import os
@@ -72,10 +73,10 @@ if __name__ == '__main__':
             end_coordinates   = (grid_home_location[0], grid_home_location[1])
 
             # Extracting map data using SeaCharts:
-            print(f'\nmapdata_path: {mapdata_path}\n center: {center}\n')
+            
             mp.extract_map_data(mapdata_path, center)
-            polygons, polygons_coords = mp.prepare_map_polygons_coords(mapdata_path)
-            mp.map_visualization(polygons_coords, saveas='map_visualization')
+            #polygons, polygons_coords = mp.prepare_map_polygons_coords(mapdata_path)
+            #mp.map_visualization(polygons_coords, saveas='map_visualization')
 
             # Generating occupancy grid:
             occupancy_grid, coords = mp.occupancy_grid_map(mapdata_path, size, buffer_size=3, visualize=True, saveas='occupancy_grid')
