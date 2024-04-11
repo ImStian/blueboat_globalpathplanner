@@ -2,7 +2,8 @@ Basisdata_50_Trondelag_25833_Dybdedata_FGDB.gdb/
 data/shapefiles/
 map_data/land_polygon_coords.csv
 map_data/shore_polygon_coords.csv
-data/astar_closedlist.png
+# data/astar_closedlist.png
 data/astar_path.png
-data/occupancy_grid.png
+# data/occupancy_grid.png
 data/map_visualization.png
+data/RRTSTAR_obstcl.png

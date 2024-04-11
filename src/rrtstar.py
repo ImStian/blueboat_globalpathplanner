@@ -191,13 +191,13 @@ def draw_nodes(nodes, start, end, iteration, obstacle_image):
     return image                                                                  # Return the modified image
 
 #Main function
-def rrtstar(occupancy_grid, start, end):
+def rrtstar(occupancy_grid, start_coords, end_coords):
  
-    start = Node(400,300)
-    end = Node(750,900)    # Adjust the coordinates of the end point as needed
-    max_iterations = 650   # Number of iterations
+    start = Node(start_coords[0],start_coords[1])
+    end = Node(end_coords[0],end_coords[1])    # Adjust the coordinates of the end point as needed
+    max_iterations = 900   # Number of iterations
     num_run = 5             # Number of paths to generate, chooses the one with lowest costs, runs the algorhitm this many times
-    bias = 0.4              # Bias towards end
+    bias = 0.03              # Bias towards end
     delta = 10               # Stepsize
     radius = 100             # Radius looking for closer parent node
     
@@ -217,7 +217,7 @@ def rrtstar(occupancy_grid, start, end):
         path = rrt_star_alg(start, end, max_iterations, delta, radius, bias, obstacle_image, height, width) # Runs the RRTSTAR algorhitm with all parameters
         print('RRT* has  done its job', (i+1), '/', num_run,' times')  
         RRT_pot_path, path_cost = find_path_from_end_node(path, end.x, end.y, start, end, obstacle_image)   # Retraces path from endnode back to start, returns waypoints and cost of path
-        print('costa de path', path_cost)
+        print('Path cost:', path_cost)
         
         if path_cost < min_cost:                                                                            # Updates min_cost if a path with lower cost is generated
                 min_cost = path_cost

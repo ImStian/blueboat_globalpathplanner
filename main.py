@@ -4,7 +4,7 @@ import src.map_preparation as mp
 import src.util_functions as uf
 import src.rrtstar as rrtstar
 import src.astar as astar
-import math as m
+import numpy as np
 import argparse
 import time
 import os
@@ -21,8 +21,8 @@ if __name__ == '__main__':
 
 
     # Filepath for settings and mapsaves:
-    mapdata_path = str(os.getcwd()) + (r'/map_data/')
-    setting_path = str(os.getcwd()) + (r'/map_settings.yaml')
+    mapdata_path = f'{os.getcwd()}/map_data/'
+    setting_path = f'{os.getcwd()}/map_settings.yaml'
 
 
     # Initializing connection via MAVLink
@@ -50,7 +50,7 @@ if __name__ == '__main__':
             print('Path planning - Destination request received.')
             start_pathplanning = False # Setting start_pathplanning variable to false
 
-            
+
 
             # Fetching current position of vehicle
             gps = mav.wait_for_gps(the_connection)
@@ -59,6 +59,8 @@ if __name__ == '__main__':
             # Converting positions from WGS84 to UTM33:
             utm33_current_position = cc.utm33_to_wgs84(gps.lat / 10**7, gps.lon / 10**7, inverse=True)
             utm33_home_position    = cc.utm33_to_wgs84(home[0] / 10**7, home[1] / 10**7, inverse=True)
+
+
 
             # Defining map size and center
             size   = [args.size_single, args.size_single]
@@ -69,17 +71,24 @@ if __name__ == '__main__':
             grid_current_position = cc.utm33_to_grid(utm33_current_position[0], utm33_current_position[1], size, center)
             grid_home_location = cc.utm33_to_grid(utm33_home_position[0], utm33_home_position[1], size, center)
 
+
+            # Define pathplanning start/end (grid coordinates)           
+            if grid_current_position[0] > size[0] or grid_current_position[0] < 0 or grid_current_position[1] > size[1] or grid_current_position[1] < 0:
+                print('Map Function - ERROR: Location out of bounds!')
+                quit()
+
             start_coordinates = (grid_current_position[0], grid_current_position[1])
             end_coordinates   = (grid_home_location[0], grid_home_location[1])
 
             # Extracting map data using SeaCharts:
-            
-            mp.extract_map_data(mapdata_path, center)
+
+            mp.extract_map_data(mapdata_path, center, size[0])
             #polygons, polygons_coords = mp.prepare_map_polygons_coords(mapdata_path)
             #mp.map_visualization(polygons_coords, saveas='map_visualization')
 
             # Generating occupancy grid:
             occupancy_grid, coords = mp.occupancy_grid_map(mapdata_path, size, buffer_size=3, visualize=True, saveas='occupancy_grid')
+
 
             # Path planning:
             if args.algorithm == 'astar':
@@ -87,7 +96,7 @@ if __name__ == '__main__':
                 path = astar.astar(occupancy_grid,start_coordinates,end_coordinates, size)
             elif args.algorithm == 'rrtstar':
                 print('Pathplanning - Running RRT*')
-                path = rrtstar.rrtstar(occupancy_grid,start_coordinates,end_coordinates, size)
+                path = rrtstar.rrtstar(np.rot90(np.flip(np.array(occupancy_grid),0),3), start_coordinates, end_coordinates)
             print('Pathplanning - Path found! : ', len(path), ' waypoints')
             uf.plot_path(occupancy_grid, path, 'Path planning')
 
@@ -121,7 +130,7 @@ if __name__ == '__main__':
 
 
         else:
-           
+
            home = mav.read_homelocation(the_connection)  # Fetching desired position of vehicle (home position)
            if home != previoushome: 
                 start_pathplanning = True
