@@ -79,6 +79,18 @@ def takeoff(the_connection):
     ack(the_connection, "COMMAND_ACK")
 
 
+def land(the_connection):
+    ''' Runs land command in MAVLINK'''
+    print('MAVLINK - Running Takeoff command')
+
+    the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component, 0,
+                                    mavutil.mavlink.MAV_CMD_NAV_LAND, 0, 0, 0, 0, 0, 0, 0, 0) # If you pass lat/long as 0 it uses the current position
+    ack(the_connection, "COMMAND_ACK")
+
+
+
+
+
 
 def set_home(the_connection, home_location, altitude):
     ''' Sets home location.
@@ -248,6 +260,19 @@ def wait_for_mission_completion(the_connection, n, mission_timeout=999999999999)
                 return True        
     print(f'MAVLINK - ERROR - Mission NOT COMPLETED within specified timeframe!')
     return False
+
+
+def set_mission_current(the_connection, seq):
+    ''' Sets the specified mission item as the current one.
+        params:
+            the_connection = connection object
+            seq            = desired current mission object
+    '''
+    print('MAVLINK - Setting mission item {seq} as current item')
+    the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component,
+                                    mavutil.mavlink.MAV_CMD_DO_SET_MISSION_CURRENT, seq, 1, 0, 0, 0, 0, 0, 0)
+    ack(the_connection, "COMMAND_ACK")    
+
 
 
 if __name__ == '__main__':

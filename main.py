@@ -94,7 +94,7 @@ if __name__ == '__main__':
             # Path planning:
             if args.algorithm == 'astar':
                 print('Pathplanning - Running A*')
-                path = astar.astar(occupancy_grid,start_coordinates,end_coordinates, size)
+                path = astar.astar(occupancy_grid,start_coordinates,end_coordinates, size, timeout=180)
             elif args.algorithm == 'rrtstar':
                 print('Pathplanning - Running RRT*')
                 path = rrtstar.rrtstar(np.rot90(np.flip(np.array(occupancy_grid),0),3), start_coordinates, end_coordinates)
@@ -120,13 +120,21 @@ if __name__ == '__main__':
 
             # Starting mission:
             print('MAVLINK - Starting Mission')
+            mav.set_mode(the_connection, 220) # Changing mode to Guided
+            mav.arm_disarm(the_connection, 1) # Arming
+            mav.takeoff(the_connection)
+            mav.set_mission_current(the_connection, 0)
             mav.start_mission(the_connection)
 
             mav.print_mission_items(the_connection)
             mav.wait_for_mission_completion(the_connection, len(mission_waypoints)) # Need to be replaced with "log_position_until_completion(the_connection, len(mission_waypoints))", which stores data within a csv file to be used for plotting and analysis of actual path compared to planned path.
             print('Mission was completed!')
 
-            mav.clear_mission(the_connection)            
+            #mav.arm_disarm(the_connection, 0) # Disarming
+            mav.land(the_connection)
+            mav.set_mode(the_connection, 192) # Changing mode to manual            
+            mav.clear_mission(the_connection)
+
 
 
 

@@ -1,9 +1,10 @@
-import matplotlib.pyplot as plt
-import math as m
 from shapely.geometry import LineString
+import matplotlib.pyplot as plt
 import numpy as np
+import math as m
 import heapq
-from warnings import warn
+import time
+
 
 ###############################################################
 '''
@@ -124,8 +125,9 @@ def euclidean_distance_sqrd(start, end):
     return ((start[0]- end[0])**2 + (start[1] - end[1])**(2))
 
 
-def astar(grid, start_position, end_position,size):
+def astar(grid, start_position, end_position,size, timeout=999999999999):
     counter = 0
+    astar_start = time.time()
     # Defining start- and end nodes:
     start_node = Node(None, start_position)
     end_node   = Node(None, end_position)
@@ -139,6 +141,11 @@ def astar(grid, start_position, end_position,size):
 
     # Running the A* algorithm:
     while  len(open_list) > 0:
+        if timeout < (astar_start- time.time()):
+            print('A* - Critical error: Algorithm timed out')
+            return start_node.position
+
+
         current_node = heapq.heappop(open_list)      # Get node with lowest 'f' value from open list
         closed_list.append(current_node)             # Add it to the closed list
 
