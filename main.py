@@ -9,6 +9,7 @@ import argparse
 import time
 import os
 
+from seacharts import ENC
 
 if __name__ == '__main__':
     # Parser-arguments for running the Python file:
@@ -64,7 +65,7 @@ if __name__ == '__main__':
 
             # Defining map size and center
             size   = [args.size_single, args.size_single]
-            center = [utm33_current_position[0] - size[0]/2, utm33_current_position[1] - size[1]/2] # Centered on current position
+            center = [utm33_current_position[0] , utm33_current_position[1]] # Centered on current position
             uf.configure_enc(setting_path, center=center, size=size) # Updating .yaml file
 
             # Define pathplanning start/end (grid coordinates)           
@@ -82,7 +83,12 @@ if __name__ == '__main__':
 
             # Extracting map data using SeaCharts:
 
-            mp.extract_map_data(mapdata_path, center, size[0])
+            enc = ENC(config='map_settings.yaml')
+            enc.update()
+            enc.display.show()
+
+
+            mp.extract_map_data(mapdata_path, center)
             #polygons, polygons_coords = mp.prepare_map_polygons_coords(mapdata_path)
             #mp.map_visualization(polygons_coords, saveas='map_visualization')
 
