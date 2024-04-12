@@ -7,3 +7,4 @@ data/astar_path.png
 data/occupancy_grid.png
 data/map_visualization.png
 data/RRTSTAR_obstcl.png
+src/__pycache__
