@@ -1,6 +1,8 @@
+from time import localtime, strftime
 from pymavlink import mavutil
 import time
 import math
+import csv
 
 ##########################################################################################
 ''' Code written by Stian Bernhardsen (2024)'''
@@ -229,10 +231,12 @@ def print_mission_items(the_connection):
     waypoint_count = msg.count
     print(f'\t MAVLINK - Counted {waypoint_count} waypoints')
 
+    mission_items = []
     sequence = []
     for i in range(waypoint_count):
         the_connection.waypoint_request_send(i)
         msg = the_connection.recv_match(type=['MISSION_ITEM'],blocking=True, timeout=1)
+        mission_items.append(msg)
         sequence.append(msg.seq)
         print(f'\t MAVLINK - Mission item {msg.seq}: [Latitude:{round((msg.x),10)}, Longitude:{round((msg.y),10)}] (Values are 10^7)')
     
@@ -242,7 +246,7 @@ def print_mission_items(the_connection):
         else:
             MAV_RESULT = 0
     #the_connection.mav.mission_ack_send(the_connection.target_system, the_connection.target_component, MAV_RESULT) # ACK causes errors.
-
+    return mission_items
 
 def wait_for_mission_completion(the_connection, n, mission_timeout=999999999999):
     '''Checks if the mission is complete
@@ -260,6 +264,35 @@ def wait_for_mission_completion(the_connection, n, mission_timeout=999999999999)
                 return True        
     print(f'MAVLINK - ERROR - Mission NOT COMPLETED within specified timeframe!')
     return False
+
+
+def log_until_completion(the_connection, n, logpath, mission_timeout=999999999999):
+    ''' Logs the GPS-coordinates of the vehicle whilst undergoing a mission.
+        Continuously checks if the mission is complete (Same functionality as wait_for_mission_completion).
+        params:
+            the_connection  = connection object
+            n               = number of mission items
+            logpath         = path to logfile
+            mission_timeout = seconds before mission throws out an error.
+    '''
+    identifier = strftime("%d_%m_%Y_%H_%M_%S", localtime())
+    logging_time_variable = time.time() + 3 # Logging every 3 seconds
+
+    while time.time() < mission_timeout:  
+        msg = the_connection.recv_match(type=['MISSION_ITEM_REACHED'], blocking=True, timeout=2)
+        if logging_time_variable < time.time():
+            logging_time_variable = time.time() +3 # Logging every 3 seconds
+            with open(f'{logpath}/mission_log_position_{identifier}.csv', 'a', newline='\n') as file:
+                writer = csv.writer(file, delimiter=';')
+                gps = the_connection.recv_match(type='GLOBAL_POSITION_INT',blocking=True, timeout=1)
+                writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , gps.lat/10**7 , gps.lon/10**7])
+            if msg != None:
+                #print(msg) # Prints MISSION_ITEM_REACHED message (Used for Debugging)
+                if msg.seq == (n-1):
+                    print('MAVLINK - Mission Completed')
+                    return True
+    print('MAVLINK - ERROR - Mission NOT COMPLETED within specified timeframe!')
+    return False   
 
 
 def set_mission_current(the_connection, seq):
