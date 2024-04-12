@@ -9,6 +9,7 @@ import argparse
 import time
 import os
 
+
 from seacharts import ENC
 
 if __name__ == '__main__':
@@ -24,6 +25,7 @@ if __name__ == '__main__':
     # Filepath for settings and mapsaves:
     mapdata_path = f'{os.getcwd()}/map_data/'
     setting_path = f'{os.getcwd()}/map_settings.yaml'
+    logging_path = f'{os.getcwd()}/mission_logs/'
 
 
     # Initializing connection via MAVLink
@@ -94,10 +96,12 @@ if __name__ == '__main__':
             # Path planning:
             if args.algorithm == 'astar':
                 print('Pathplanning - Running A*')
-                path = astar.astar(occupancy_grid,start_coordinates,end_coordinates, size, timeout=180)
+                path = astar.astar(occupancy_grid,start_coordinates,end_coordinates, size, timeout=2000000000)
             elif args.algorithm == 'rrtstar':
                 print('Pathplanning - Running RRT*')
                 path = rrtstar.rrtstar(np.rot90(np.flip(np.array(occupancy_grid),0),3), start_coordinates, end_coordinates)
+            elif args.algorithm == 'custom':
+                
             print('Pathplanning - Path found! : ', len(path), ' waypoints')
             uf.plot_path(occupancy_grid, path, 'Path planning')
 
@@ -126,8 +130,9 @@ if __name__ == '__main__':
             mav.set_mission_current(the_connection, 0)
             mav.start_mission(the_connection)
 
-            mav.print_mission_items(the_connection)
-            mav.wait_for_mission_completion(the_connection, len(mission_waypoints)) # Need to be replaced with "log_position_until_completion(the_connection, len(mission_waypoints))", which stores data within a csv file to be used for plotting and analysis of actual path compared to planned path.
+            mission_items = mav.print_mission_items(the_connection)
+            uf.log_mission_items(logging_path)
+            mav.log_until_completion(the_connection, len(mission_waypoints), logging_path) # Need to be replaced with "log_position_until_completion(the_connection, len(mission_waypoints))", which stores data within a csv file to be used for plotting and analysis of actual path compared to planned path.
             print('Mission was completed!')
 
             #mav.arm_disarm(the_connection, 0) # Disarming

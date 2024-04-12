@@ -186,7 +186,8 @@ def draw_nodes(nodes, start, end, iteration, obstacle_image):
     image = cv2.circle(image, (int(start.x), int(start.y)), 5, GREEN, -1)         # Places the start loaction as a cirle in space and colors it green 
     image = cv2.circle(image, (int(end.x), int(end.y)), 5, PURPLE, -1)            # Places the end loaction as a cirle in space and colors it purple
     cv2.putText(image, f"Iterations: {iteration}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2) # Shows wich iteration the algorhitm is at
-    cv2.imshow("RRT* Path Planning", image)                                       # Displays the image
+    
+    cv2.imshow("RRT* Path Planning", cv2.resize(image, (481, 481)))                                       # Displays the image
     cv2.waitKey(1)
     return image                                                                  # Return the modified image
 
@@ -197,7 +198,7 @@ def rrtstar(occupancy_grid, start_coords, end_coords):
     end = Node(end_coords[0],end_coords[1])    # Adjust the coordinates of the end point as needed
     max_iterations = 850   # Number of iterations
     num_run = 5             # Number of paths to generate, chooses the one with lowest costs, runs the algorhitm this many times
-    bias = 0.03              # Bias towards end
+    bias = 0.02              # Bias towards end
     delta = 10               # Stepsize
     radius = 100             # Radius looking for closer parent node
     

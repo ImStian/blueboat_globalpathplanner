@@ -1,5 +1,7 @@
 import ruamel.yaml # For Yaml
 from pyproj import Transformer # For coordinate transforming
+import csv
+from time import localtime, strftime
 import numpy as np
 import matplotlib.pyplot as plt
 import os
@@ -47,6 +49,13 @@ def configure_enc(yaml_path, center, size):
     with open(yaml_path, "w") as yamlfile:
         yaml.dump(content, yamlfile)
 
+
+def log_mission_items(logpath, mission_items):
+    identifier = strftime("%d_%m_%Y_%H_%M_%S", localtime())
+    with open(f'{logpath}/mission_log_position_{identifier}.csv', 'a', newline='\n') as file:
+        writer = csv.writer(file, delimiter=';')
+        for item in mission_items:
+            writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , item.seq, item.lat / 10**7, item.lon / 10**7])
 
 
 if __name__ == '__main__':
