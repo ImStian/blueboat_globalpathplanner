@@ -1,12 +1,12 @@
-import ruamel.yaml # For Yaml
 from pyproj import Transformer # For coordinate transforming
-import csv
 from time import localtime, strftime
-import numpy as np
 import matplotlib.pyplot as plt
+import ruamel.yaml # For Yaml
+import numpy as np
+import csv
 import os
 
-
+# The plot_path function will be replaced by a more polished version
 def plot_path(grid, path, title=None, savepath="./data/%s.png"%'astar_path'):
     plt.figure('Path')
     plt.title(title)
@@ -24,7 +24,7 @@ def plot_path(grid, path, title=None, savepath="./data/%s.png"%'astar_path'):
         y.append(waypoint[1])
     plt.scatter(x,y,s=0.5,color='red')
     plt.savefig(savepath, dpi=300, bbox_inches='tight', pad_inches=0.2)
-        
+       
 
 def configure_enc(yaml_path, center, size):
     """ Changes configuration values in the ENC's .yaml file:
@@ -50,12 +50,16 @@ def configure_enc(yaml_path, center, size):
         yaml.dump(content, yamlfile)
 
 
-def log_mission_items(logpath, mission_items):
-    identifier = strftime("%d_%m_%Y_%H_%M_%S", localtime())
+def log_mission_items(identifier, logpath, mission_items):
     with open(f'{logpath}/mission_log_waypoints_{identifier}.csv', 'a', newline='\n') as file:
         writer = csv.writer(file, delimiter=';')
         for item in mission_items:
             writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , item.seq, item.x/10**7, item.y/10**7])
+
+def log_enc_config(identifier,logpath, size, center): 
+    with open(f'{logpath}/mission_log_config_{identifier}.csv', 'a', newline='\n') as file:
+        writer = csv.writer(file, delimiter=';')
+        writer.writerow([size, center])
 
 
 if __name__ == '__main__':

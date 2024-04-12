@@ -1,5 +1,6 @@
 import src.mavlink_communication as mav
 import src.coordinate_conversion as cc
+from time import localtime, strftime
 import src.map_preparation as mp
 import src.util_functions as uf
 import src.rrtstar as rrtstar
@@ -50,7 +51,7 @@ if __name__ == '__main__':
             print('Path planning - Destination request received.')
             start_pathplanning = False # Setting start_pathplanning variable to false
 
-
+            identifier = strftime("%d_%m_%Y_%H_%M_%S", localtime()) # Mission identifier (Used for log files)
 
             # Fetching current position of vehicle
             gps = mav.wait_for_gps(the_connection)
@@ -67,6 +68,8 @@ if __name__ == '__main__':
             center =  [utm33_current_position[0] - size[0]/2, utm33_current_position[1] - size[1]/2] # Centered on current position
             center_enc = [utm33_current_position[0] , utm33_current_position[1]] # Centered on current position
             uf.configure_enc(setting_path, center=center_enc, size=size) # Updating .yaml file
+            uf.log_enc_config(identifier, logging_path, size, center)
+
 
             # Define pathplanning start/end (grid coordinates)           
             grid_current_position = cc.utm33_to_grid(utm33_current_position[0], utm33_current_position[1], size, center)
@@ -127,8 +130,8 @@ if __name__ == '__main__':
             mav.start_mission(the_connection)
 
             mission_items = mav.print_mission_items(the_connection)
-            uf.log_mission_items(logging_path, mission_items)
-            mav.log_until_completion(the_connection, len(mission_waypoints), logging_path) # Need to be replaced with "log_position_until_completion(the_connection, len(mission_waypoints))", which stores data within a csv file to be used for plotting and analysis of actual path compared to planned path.
+            uf.log_mission_items(identifier,logging_path, mission_items)
+            mav.log_until_completion(the_connection, identifier, len(mission_waypoints), logging_path) # Need to be replaced with "log_position_until_completion(the_connection, len(mission_waypoints))", which stores data within a csv file to be used for plotting and analysis of actual path compared to planned path.
             print('Mission was completed!')
 
             #mav.arm_disarm(the_connection, 0) # Disarming

@@ -266,7 +266,7 @@ def wait_for_mission_completion(the_connection, n, mission_timeout=999999999999)
     return False
 
 
-def log_until_completion(the_connection, n, logpath, mission_timeout=999999999999):
+def log_until_completion(the_connection, identifier, n, logpath, mission_timeout=999999999999):
     ''' Logs the GPS-coordinates of the vehicle whilst undergoing a mission.
         Continuously checks if the mission is complete (Same functionality as wait_for_mission_completion).
         params:
@@ -275,7 +275,6 @@ def log_until_completion(the_connection, n, logpath, mission_timeout=99999999999
             logpath         = path to logfile
             mission_timeout = seconds before mission throws out an error.
     '''
-    identifier = strftime("%d_%m_%Y_%H_%M_%S", localtime())
     logging_time_variable = time.time() + 3 # Logging every 3 seconds
 
     while time.time() < mission_timeout:  
