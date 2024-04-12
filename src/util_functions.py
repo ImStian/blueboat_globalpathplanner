@@ -52,10 +52,10 @@ def configure_enc(yaml_path, center, size):
 
 def log_mission_items(logpath, mission_items):
     identifier = strftime("%d_%m_%Y_%H_%M_%S", localtime())
-    with open(f'{logpath}/mission_log_position_{identifier}.csv', 'a', newline='\n') as file:
+    with open(f'{logpath}/mission_log_waypoints_{identifier}.csv', 'a', newline='\n') as file:
         writer = csv.writer(file, delimiter=';')
         for item in mission_items:
-            writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , item.seq, item.lat / 10**7, item.lon / 10**7])
+            writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , item.seq, item.x/10**7, item.y/10**7])
 
 
 if __name__ == '__main__':

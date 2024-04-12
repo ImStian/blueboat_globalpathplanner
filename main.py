@@ -9,9 +9,6 @@ import argparse
 import time
 import os
 
-
-from seacharts import ENC
-
 if __name__ == '__main__':
     # Parser-arguments for running the Python file:
     parser = argparse.ArgumentParser(description = 'Global path planner parameters:')

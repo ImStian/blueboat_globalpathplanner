@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 This implementation of the RRT* algorithm is based upon code written by Aakash Yadav. 
 Link: https://github.com/nimRobotics/RRT/tree/master
 
-The code has been heavily modified to work within this project.
+The code has been heavily modified to work with this project.
 Code written by Markus Rekkedal
 '''
 ##############################################################
