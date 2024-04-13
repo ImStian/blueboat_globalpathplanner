@@ -30,7 +30,7 @@ def configure_enc(yaml_path, center, size):
     """ Changes configuration values in the ENC's .yaml file:
         Input:
             - yaml_path: Filepath to yaml file
-            - center: New centervalue (in practice "cornervalue") TODO: Add offset
+            - center: New centervalue (in practice "cornervalue")
             - size: New sizevalue
         """
     
@@ -54,12 +54,12 @@ def log_mission_items(identifier, logpath, mission_items):
     with open(f'{logpath}/mission_log_waypoints_{identifier}.csv', 'a', newline='\n') as file:
         writer = csv.writer(file, delimiter=';')
         for item in mission_items:
-            writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , item.seq, item.x/10**7, item.y/10**7])
+            writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , item.seq, item.x, item.y])
 
 def log_enc_config(identifier,logpath, size, center): 
     with open(f'{logpath}/mission_log_config_{identifier}.csv', 'a', newline='\n') as file:
         writer = csv.writer(file, delimiter=';')
-        writer.writerow([size, center])
+        writer.writerow([size[0], size[1], center[0], center[1]])
 
 
 if __name__ == '__main__':
