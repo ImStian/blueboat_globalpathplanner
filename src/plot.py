@@ -31,17 +31,18 @@ def read_position(identifier, logpath):
 
     position = {
         'time'      : [],
-        'latitude'  : [],
-        'longitude' : [],
+        'x'  : [],
+        'y' : [],
     }
     
     with open(f'{logpath}/mission_log_position_{identifier}.csv', 'r', newline='\n') as positionfile:
         reader = csv.reader(positionfile, delimiter=';')
         for row in reader:
             time, latitude, longitude = row
+            xy = cc.utm33_to_wgs84(latitude, longitude, inverse=True)
             position['time'].append(time)
-            position['latitude'].append(latitude)
-            position['longitude'].append(longitude)
+            position['x'].append(xy[0])
+            position['y'].append(xy[1])
     return position
 
 
@@ -115,6 +116,17 @@ def plot_mission(enc_settings, identifier, logpath):
     
         previous_waypoint_coordinates = waypoint_coordinates
     
+    # Draw actual path
+    previous_position_coordinates = 0
+    all_positions = []
+    for index in range(len(position['x'])):
+        position_coordinates = (position['x'][index], position['y'][index])
+        all_positions.append(position_coordinates)
+
+    enc.display.draw_line(points=all_positions,
+                            color='red',
+                            width=0.25,
+                            )
 
     enc.display.show()
 
