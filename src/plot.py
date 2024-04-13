@@ -100,12 +100,25 @@ def plot_mission(enc_settings, identifier, logpath):
     previous_waypoint_coordinates = 0
     for index in waypoints['seq']:
         waypoint_coordinates = (waypoints['x'][index], waypoints['y'][index])
-        print(waypoint_coordinates)
-        enc.display.draw_circle(center=waypoint_coordinates,
-                                radius=4.0,
-                                color='white',
-                                fill=True,
-                                )
+
+        if index == 0:
+            enc.display.draw_circle(center=waypoint_coordinates,
+                                    radius=4.0,
+                                    color='green',
+                                    fill=True,
+                                    )
+        elif index == len(waypoints['seq']):
+            enc.display.draw_circle(center=waypoint_coordinates,
+                                    radius=4.0,
+                                    color='red',
+                                    fill=True,
+                                    )        
+        else:
+            enc.display.draw_circle(center=waypoint_coordinates,
+                                    radius=4.0,
+                                    color='white',
+                                    fill=True,
+                                    )
 
         if (previous_waypoint_coordinates != 0):
             enc.display.draw_arrow(start=previous_waypoint_coordinates,
@@ -129,7 +142,7 @@ def plot_mission(enc_settings, identifier, logpath):
                             )
 
     enc.display.show()
-
+    
 
 
 
