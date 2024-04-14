@@ -10,4 +10,6 @@ setting_path = f'{os.getcwd()}/map_settings.yaml'
 logging_path = f'{os.getcwd()}/mission_logs/'
 identifier = '13_04_2024_15_29_34'
 
+identifier = input('Enter identifier: ')
+
 plot_mission(setting_path, identifier, logging_path)
