@@ -87,12 +87,13 @@ def plot_mission(enc_settings, identifier, logpath):
     '''
 
     # Reading the mission logs
-    size, center    = read_config(identifier, logpath)
+    size, startpos    = read_config(identifier, logpath)
+    center = center =  [startpos[0] + size[0]/2, startpos[1] + size[1]/2]
     waypoints = read_waypoints(identifier, logpath)
     position  = read_position(identifier, logpath)
 
     # Configuring ENC to be identical to the mission
-    uf.configure_enc(enc_settings, (272338.26,7043905.93), size)
+    uf.configure_enc(enc_settings, center, size)
     enc = ENC(config='map_settings.yaml')
     enc.update()
 

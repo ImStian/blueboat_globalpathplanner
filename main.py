@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
 
     # Initializing connection via MAVLink
-    the_connection = mav.establish_heartbeat('udpin:localhost:14541')
+    the_connection = mav.establish_heartbeat('udpin:192.168.2.1:14770')
 
     mav.clear_mission(the_connection) # Clearing previous mission
 
@@ -90,7 +90,7 @@ if __name__ == '__main__':
             #mp.map_visualization(polygons_coords, saveas='map_visualization')
 
             # Generating occupancy grid:
-            occupancy_grid, coords = mp.occupancy_grid_map(mapdata_path, size, buffer_size=3, visualize=True, saveas='occupancy_grid')
+            occupancy_grid, coords = mp.occupancy_grid_map(mapdata_path, size, buffer_size=2, visualize=True, saveas='occupancy_grid')
 
 
             # Path planning:
