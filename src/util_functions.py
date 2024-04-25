@@ -1,4 +1,5 @@
 from pyproj import Transformer # For coordinate transforming
+from src.mavlink_communication import get_gps
 from time import localtime, strftime
 import matplotlib.pyplot as plt
 import ruamel.yaml # For Yaml
@@ -50,11 +51,13 @@ def configure_enc(yaml_path, center, size):
         yaml.dump(content, yamlfile)
 
 
-def log_mission_items(identifier, logpath, mission_items):
+def log_mission_items(identifier, logpath, mission_items, the_connection):
+    starting_position = get_gps(the_connection)
     with open(f'{logpath}/mission_log_waypoints_{identifier}.csv', 'a', newline='\n') as file:
         writer = csv.writer(file, delimiter=';')
+        writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , 0, starting_position.lat/10**7 , starting_position.lon/10**7])
         for item in mission_items:
-            writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , item.seq, item.x, item.y])
+            writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , item.seq+1, item.x, item.y])
 
 def log_enc_config(identifier,logpath, size, center): 
     with open(f'{logpath}/mission_log_config_{identifier}.csv', 'a', newline='\n') as file:

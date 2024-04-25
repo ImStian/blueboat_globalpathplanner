@@ -97,8 +97,18 @@ def plot_mission(enc_settings, identifier, logpath):
     enc = ENC(config='map_settings.yaml')
     enc.update()
 
-    # Drawing waypoint with arrows between:
-    previous_waypoint_coordinates = 0
+    # Drawing waypoint with lines between:
+    waypoints_all_positions = []
+    for index in range(len(position['x'])):
+        position_coordinates = (position['x'][index], position['y'][index])
+        waypoints_all_positions.append(position_coordinates)
+    enc.display.draw_line(
+        points=waypoints_all_positions,
+        color = 'white',
+        width=1,    
+        )
+
+    # Adding the waypointt gots
     for index in waypoints['seq']:
         waypoint_coordinates = (waypoints['x'][index], waypoints['y'][index])
 
@@ -108,7 +118,7 @@ def plot_mission(enc_settings, identifier, logpath):
                                     color='green',
                                     fill=True,
                                     )
-        elif index == len(waypoints['seq']):
+        elif index == len(waypoints['seq']) - 1:
             enc.display.draw_circle(center=waypoint_coordinates,
                                     radius=4.0,
                                     color='red',
@@ -120,30 +130,22 @@ def plot_mission(enc_settings, identifier, logpath):
                                     color='white',
                                     fill=True,
                                     )
-
-        if (previous_waypoint_coordinates != 0):
-            enc.display.draw_arrow(start=previous_waypoint_coordinates,
-                                end=waypoint_coordinates,
-                                color='white',
-                                width=0.25,
-                                fill=True)
-    
-        previous_waypoint_coordinates = waypoint_coordinates
     
     # Draw actual path
-    previous_position_coordinates = 0
-    all_positions = []
+    gps_all_positions = []
     for index in range(len(position['x'])):
         position_coordinates = (position['x'][index], position['y'][index])
-        all_positions.append(position_coordinates)
+        gps_all_positions.append(position_coordinates)
 
-    enc.display.draw_line(points=all_positions,
-                            color='red',
+    enc.display.draw_line(points=gps_all_positions,
+                            color='blue',
                             width=0.25,
                             )
 
+
     enc.display.show()
     
+
 
 
 

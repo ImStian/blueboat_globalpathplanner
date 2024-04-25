@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
 
     # Initializing connection via MAVLink
-    the_connection = mav.establish_heartbeat('udpin:192.168.2.1:14770')
+    the_connection = mav.establish_heartbeat('udpin:localhost:14541') # 192.168.2.1:14770
 
     mav.clear_mission(the_connection) # Clearing previous mission
 
@@ -130,7 +130,7 @@ if __name__ == '__main__':
             mav.start_mission(the_connection)
 
             mission_items = mav.print_mission_items(the_connection)
-            uf.log_mission_items(identifier,logging_path, mission_items)
+            uf.log_mission_items(identifier,logging_path, mission_items, the_connection)
             mav.log_until_completion(the_connection, identifier, len(mission_waypoints), logging_path) # Need to be replaced with "log_position_until_completion(the_connection, len(mission_waypoints))", which stores data within a csv file to be used for plotting and analysis of actual path compared to planned path.
             print('Mission was completed!')
 
