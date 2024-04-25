@@ -43,7 +43,7 @@ def utm33_to_wgs84(coordinate1, coordinate2, inverse=False):
     else:
         transformer = Transformer.from_crs(UTM33, WGS84)
         converted_coordinates = transformer.transform(coordinate1, coordinate2) # Necessary arg order
-        # transform returns reverse order (longitude, latitude), reversing to get (latitude, longitdue)
+        # transform returns reverse order (longitude, latitude), reversing to get (latitude, longitude)
         return (converted_coordinates[1], converted_coordinates[0])
     
 
