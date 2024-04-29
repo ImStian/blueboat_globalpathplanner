@@ -89,6 +89,12 @@ def get_all_children(node):
 
 
 def decimation_filter(path, epsillon=2.0):
+    ''' Decimation filter for reducing the number of waypoints in a path.
+        Returns a simplified path in the same format as the input path.
+        Input:
+            - path: Path returned by A*
+            - epsillon: Parameter for adjusting decimation strength
+    '''
     path_as_linestring = LineString(path)
     return path_as_linestring.simplify(epsillon, preserve_topology=True).coords
 
