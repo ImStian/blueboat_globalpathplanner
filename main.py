@@ -96,7 +96,7 @@ if __name__ == '__main__':
             # Path planning:
             if args.algorithm == 'astar':
                 print('Pathplanning - Running A*')
-                path = astar.astar(occupancy_grid,start_coordinates,end_coordinates, size, timeout=2000000000)
+                path = astar.astar(occupancy_grid,start_coordinates,end_coordinates, size, timeout=120)
             elif args.algorithm == 'rrtstar':
                 print('Pathplanning - Running RRT*')
                 path = rrtstar.rrtstar(np.rot90(np.flip(np.array(occupancy_grid),0),3), start_coordinates, end_coordinates)

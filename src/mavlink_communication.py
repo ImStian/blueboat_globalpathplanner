@@ -277,18 +277,19 @@ def log_until_completion(the_connection, identifier, n, logpath, mission_timeout
     logging_time_variable = time.time() + 3 # Logging every 3 seconds
 
     while time.time() < mission_timeout:  
-        msg = the_connection.recv_match(type=['MISSION_ITEM_REACHED'], blocking=True, timeout=2)
+        msg = the_connection.recv_match(type=['MISSION_ITEM_REACHED'], blocking=True, timeout=1)
+
         if logging_time_variable < time.time():
             logging_time_variable = time.time() +3 # Logging every 3 seconds
             with open(f'{logpath}/mission_log_position_{identifier}.csv', 'a', newline='\n') as file:
                 writer = csv.writer(file, delimiter=';')
                 gps = the_connection.recv_match(type='GLOBAL_POSITION_INT',blocking=True, timeout=1)
                 writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , gps.lat/10**7 , gps.lon/10**7])
-            if msg != None:
-                #print(msg) # Prints MISSION_ITEM_REACHED message (Used for Debugging)
-                if msg.seq == (n-1):
-                    print('MAVLINK - Mission Completed')
-                    return True
+        if msg != None:
+            print(msg.seq,'/', n-1) # Prints MISSION_ITEM_REACHED message (Used for Debugging)
+            if msg.seq == (n - 1):
+                print('MAVLINK - Mission Completed')
+                return True
     print('MAVLINK - ERROR - Mission NOT COMPLETED within specified timeframe!')
     return False   
 
