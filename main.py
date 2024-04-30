@@ -123,7 +123,7 @@ if __name__ == '__main__':
 
             # Starting mission:
             print('MAVLINK - Starting Mission')
-            mav.set_mode(the_connection, 220) # Changing mode to Guided
+            mav.set_mode(the_connection, 'GUIDED') # Changing mode to Guided
             mav.arm_disarm(the_connection, 1) # Arming
             mav.takeoff(the_connection)
             mav.set_mission_current(the_connection, 0)
@@ -132,12 +132,13 @@ if __name__ == '__main__':
             mission_items = mav.print_mission_items(the_connection)
             uf.log_mission_items(identifier,logging_path, mission_items, the_connection)
             mav.log_until_completion(the_connection, identifier, len(mission_waypoints), logging_path) # Need to be replaced with "log_position_until_completion(the_connection, len(mission_waypoints))", which stores data within a csv file to be used for plotting and analysis of actual path compared to planned path.
-            print('Mission was completed!')
+            print('MAVLINK - Mission was completed!')
 
             #mav.arm_disarm(the_connection, 0) # Disarming
             mav.land(the_connection)
-            mav.set_mode(the_connection, 192) # Changing mode to manual            
+            mav.set_mode(the_connection, 'MANUAL') # Changing mode to manual            
             mav.clear_mission(the_connection)
+            print('\nGENERAL - Ready to start a new mission!\n')
 
 
 

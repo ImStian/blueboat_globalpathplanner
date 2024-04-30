@@ -67,8 +67,7 @@ def set_mode(the_connection, MAV_MODE):
         parms:
             the_connection = connection object
             MAV_MODE = See https://mavlink.io/en/messages/common.html#MAV_MODE for overview'''
-    the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component,
-                                    mavutil.mavlink.MAV_CMD_DO_SET_MODE, 0, MAV_MODE, 0, 0, 0, 0, 0, 0)
+    the_connection.set_mode(MAV_MODE)
     ack(the_connection, "COMMAND_ACK")
 
 
