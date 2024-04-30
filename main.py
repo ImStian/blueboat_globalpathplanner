@@ -17,6 +17,10 @@ if __name__ == '__main__':
                         dest='size_single', help='Size of map extraction (Default=2500). A smaller map will limit path length.')
     parser.add_argument('-algo', type=str, default='astar', metavar='pathplanning_algorithm', action='store', 
                         dest='algorithm', help='Selection of which path planning algorithm to be used. Valid entries:  astar  ,  rrtstar')
+    parser.add_argument('-disable_log',  action='store_true',
+                        dest='logging', help='Choose to disable logging of mission')
+    parser.add_argument('-note', type=str, default='', metavar='mission_log_note', action='store',
+                        dest='mission_note', help='(Optional) Add a note for mission logs')
     args = parser.parse_args()
 
 
@@ -68,7 +72,8 @@ if __name__ == '__main__':
             center =  [utm33_current_position[0] - size[0]/2, utm33_current_position[1] - size[1]/2] # Centered on current position
             center_enc = [utm33_current_position[0] , utm33_current_position[1]] # Centered on current position
             uf.configure_enc(setting_path, center=center_enc, size=size) # Updating .yaml file
-            uf.log_enc_config(identifier, logging_path, size, center)
+            if not args.logging:
+                uf.log_enc_config(identifier, logging_path, size, center, args.algorithm, args.mission_note)
 
 
             # Define pathplanning start/end (grid coordinates)           
@@ -130,8 +135,12 @@ if __name__ == '__main__':
             mav.start_mission(the_connection)
 
             mission_items = mav.print_mission_items(the_connection)
-            uf.log_mission_items(identifier,logging_path, mission_items, the_connection)
-            mav.log_until_completion(the_connection, identifier, len(mission_waypoints), logging_path) # Need to be replaced with "log_position_until_completion(the_connection, len(mission_waypoints))", which stores data within a csv file to be used for plotting and analysis of actual path compared to planned path.
+
+            if not args.logging: 
+                uf.log_mission_items(identifier,logging_path, mission_items, the_connection)
+                mav.log_until_completion(the_connection, identifier, len(mission_waypoints), logging_path) # Need to be replaced with "log_position_until_completion(the_connection, len(mission_waypoints))", which stores data within a csv file to be used for plotting and analysis of actual path compared to planned path.
+            else:
+                mav.wait_for_mission_completion(the_connection,len(mission_waypoints))
             print('MAVLINK - Mission was completed!')
 
             #mav.arm_disarm(the_connection, 0) # Disarming
