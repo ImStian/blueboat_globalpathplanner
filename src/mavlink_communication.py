@@ -284,7 +284,8 @@ def log_until_completion(the_connection, identifier, n, logpath, mission_timeout
             with open(f'{logpath}/mission_log_position_{identifier}.csv', 'a', newline='\n') as file:
                 writer = csv.writer(file, delimiter=';')
                 gps = the_connection.recv_match(type='GLOBAL_POSITION_INT',blocking=True, timeout=1)
-                writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , gps.lat/10**7 , gps.lon/10**7])
+                if gps != None: # Newly added (To prevent errors)
+                    writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , gps.lat/10**7 , gps.lon/10**7])
         if msg != None:
             print(msg.seq,'/', n-1) # Prints MISSION_ITEM_REACHED message (Used for Debugging)
             if msg.seq == (n - 1):

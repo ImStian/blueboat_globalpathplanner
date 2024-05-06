@@ -16,9 +16,11 @@ def read_config(identifier, logpath):
     with open(f'{logpath}/mission_log_config_{identifier}.csv', 'r', newline='\n') as configfile:
         reader = csv.reader(configfile, delimiter=';')
         for row in reader:
-            size0, size1, center0, center1 = row
+            size0, size1, center0, center1, algo, note = row
             size = (int(size0), int(size1))
-            center = (float(center0), float(center1))    
+            center = (float(center0), float(center1))
+            print(f'Algorithm: ' + algo)
+            print(f'Note: ' + note)
     return size, center
 
 

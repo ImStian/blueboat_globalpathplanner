@@ -89,7 +89,7 @@ def prepare_map_polygons_coords(path):
     algo_start = time.time()
     print('Map Function - Generating polygons and coordinates form map data.')
     # LAND POLYGONS
-    with open(path+'land_polygon_coords.csv', 'r', encoding='UTF-8') as file:
+    with open(path+'shore_polygon_coords.csv', 'r', encoding='UTF-8') as file:
         poly_list = csv.reader(file)
         # Convert string in csv to float
         land_polygon_coords = []
@@ -167,7 +167,7 @@ def occupancy_grid_map(path, size, buffer_size=None, visualize=False, saveas=Non
     algo_start = time.time()
     print('Map functions - Creating occupancy grid map.')
     occupancy_grid = np.zeros((size[0], size[1]), dtype=np.uint8)
-    with open(f'{path}/shore_polygon_coords.csv', 'r', encoding='UTF-8') as file:
+    with open(f'{path}/land_polygon_coords.csv', 'r', encoding='UTF-8') as file:
         poly_list = csv.reader(file)
         coords = []
         # Convert string in csv to float
