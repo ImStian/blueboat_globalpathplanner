@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
 
     # Initializing connection via MAVLink
-    the_connection = mav.establish_heartbeat('udpin:192.168.2.1:14770') #  localhost:14541
+    the_connection = mav.establish_heartbeat('udpin:localhost:14541') #   192.168.2.1:14770
 
     mav.clear_mission(the_connection) # Clearing previous mission
 
@@ -73,7 +73,7 @@ if __name__ == '__main__':
             center_enc = [utm33_current_position[0] , utm33_current_position[1]] # Centered on current position
             uf.configure_enc(setting_path, center=center_enc, size=size) # Updating .yaml file
             if not args.logging:
-                uf.log_enc_config(identifier, logging_path, size, center, args.algorithm, args.mission_note)
+                uf.log_enc_config(identifier, logging_path, size, center, utm33_home_position, args.algorithm, args.mission_note)
 
 
             # Define pathplanning start/end (grid coordinates)           
@@ -95,7 +95,7 @@ if __name__ == '__main__':
             #mp.map_visualization(polygons_coords, saveas='map_visualization')
 
             # Generating occupancy grid:
-            occupancy_grid, coords = mp.occupancy_grid_map(mapdata_path, size, buffer_size=3, visualize=True, saveas='occupancy_grid')
+            occupancy_grid, coords = mp.occupancy_grid_map(mapdata_path, size, buffer_size=5, visualize=True, saveas='occupancy_grid')
 
 
             # Path planning:

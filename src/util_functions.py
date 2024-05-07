@@ -59,10 +59,10 @@ def log_mission_items(identifier, logpath, mission_items, the_connection):
         for item in mission_items:
             writer.writerow([strftime("%d/%m/%Y_%H:%M:%S", localtime()) , item.seq+1, item.x, item.y])
 
-def log_enc_config(identifier,logpath, size, center, algorithm, note): 
+def log_enc_config(identifier,logpath, size, center, target, algorithm, note): 
     with open(f'{logpath}/mission_log_config_{identifier}.csv', 'a', newline='\n') as file:
         writer = csv.writer(file, delimiter=';')
-        writer.writerow([size[0], size[1], center[0], center[1], algorithm, note])
+        writer.writerow([size[0], size[1], center[0], center[1], target[0], target[1], algorithm, note])
 
 
 if __name__ == '__main__':
