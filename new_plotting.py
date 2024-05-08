@@ -7,9 +7,10 @@ import numpy as np
 import os
 
 identifier = input('Enter identifier: ')
-identifier = r'07_05_2024_10_41_37'
-#identifier = '07_05_2024_12_31_08'
-#identifier = '07_05_2024_12_32_41'
+#identifier = r'07_05_2024_10_41_37' # LONG DISTANCE TEST
+#identifier = '07_05_2024_12_32_41' # Around obstacle1
+identifier = '07_05_2024_13_06_18' # around obstacle2
+#identifier = '07_05_2024_12_34_46'
 mapdata_path = f'{os.getcwd()}/map_data/'
 setting_path = f'{os.getcwd()}/map_settings.yaml'
 logging_path = f'{os.getcwd()}/mission_logs/'
@@ -19,6 +20,7 @@ logging_path = f'{os.getcwd()}/mission_logs/'
 
 size, center, algo,  target, note =  pl.read_config(identifier, logging_path)
 center_enc = [center[0] + size[0]/2, center[1] + size[1]/2]
+algo = ''
 
 position = pl.read_position(identifier, logging_path)
 
@@ -46,6 +48,8 @@ waypoints = pl.read_waypoints(identifier, logging_path)
 grid_waypoints_x = []
 grid_waypoints_y = []
 
+
+
 print(len(waypoints['seq']))
 for i in range(len(waypoints['seq'])):
     utm_coordinate = [waypoints['x'][i], waypoints['y'][i]]
@@ -56,7 +60,6 @@ for i in range(len(waypoints['seq'])):
 data = list(zip(grid_waypoints_x, grid_waypoints_y))
 data.sort()  # Sort by the first element of each tuple (x-coordinate)
 grid_waypoints_x, grid_waypoints_y = zip(*data)
-
 
 # Extracting ENC data to get accurate background
 uf.configure_enc(setting_path, center_enc, size)
@@ -78,7 +81,7 @@ plt.plot(grid_waypoints_x, grid_waypoints_y, markersize=12, linewidth=2, c='oran
 plt.plot(grid_position_x, grid_position_y, markersize=12, linewidth=3, c='purple',  alpha=0.75, label='Position')
 
 # Highlighting all waypoints/position readings
-#plt.scatter(grid_position_x, grid_position_y, s=5, c='pruple')
+#plt.scatter(grid_position_x, grid_position_y, s=5, c='purple')
 plt.scatter(grid_waypoints_x, grid_waypoints_y, s=40, c='orange',  edgecolors='black', linewidths=1, label='Waypoints', zorder=2)
 
 # MARKING START AND END

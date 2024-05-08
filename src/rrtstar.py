@@ -123,9 +123,9 @@ def retrace_path(end_node, start, end, obstacle_image): # Extract the coordinate
             current = current.parent
 
         # Visualize the optimal path    
-        image_with_nodes = draw_nodes(best_path, start, end, iteration, obstacle_image )
-        cv2.waitKey(1000)
-        cv2.destroyAllWindows()   
+        #image_with_nodes = draw_nodes(best_path, start, end, iteration, obstacle_image )
+        #cv2.waitKey(1000)
+        #cv2.destroyAllWindows()   
         return path[::-1]                                                 
 
 def rrt_star_alg(start, end, max_iterations, delta, radius, bias, obstacle_image, height, width):
@@ -183,8 +183,8 @@ def rrt_star_alg(start, end, max_iterations, delta, radius, bias, obstacle_image
             break                                                                                    # Exit the loop after finding the first node that passes the collision check
 
         # Visualization
-        draw_nodes(nodes, start, end, iteration, obstacle_image)
-    cv2.destroyAllWindows()
+        #draw_nodes(nodes, start, end, iteration, obstacle_image)
+    #cv2.destroyAllWindows()
       
     return nodes
 

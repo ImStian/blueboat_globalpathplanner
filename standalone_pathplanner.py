@@ -16,13 +16,13 @@ logging_path = f'{os.getcwd()}/mission_logs/'
 
 
 # Defining map size and center
-size   = [7500, 7500]
-center = [251459.72431460491, 7030336.552629814] # Centered on current position
+size   = [2000, 2000]
+center = [252555.72326179774, 7035808.149017857] # Centered on current position
 center_enc =  [center[0] + size[0]/2, center[1] + size[1]/2] # Centered on current position
 uf.configure_enc(setting_path, center=center_enc, size=size) # Updating .yaml file
 
-utm33_current_position = (255154.05073167084, 7034111.246294714)
-utm33_home_position = (253500.0412661848, 7036556.63955146)
+utm33_current_position = (253558.63731427345, 7036807.734086929)
+utm33_home_position = (253440.49996589732, 7036954.186699727)
 
 
 
