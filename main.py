@@ -95,7 +95,7 @@ if __name__ == '__main__':
             #mp.map_visualization(polygons_coords, saveas='map_visualization')
 
             # Generating occupancy grid:
-            occupancy_grid, coords = mp.occupancy_grid_map(mapdata_path, size, buffer_size=15, visualize=True, saveas='occupancy_grid')
+            occupancy_grid, coords = mp.occupancy_grid_map(mapdata_path, size, buffer_size=0, visualize=True, saveas='occupancy_grid')
 
 
             # Path planning:

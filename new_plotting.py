@@ -9,6 +9,7 @@ import os
 identifier = input('Enter identifier: ')
 identifier = r'07_05_2024_10_41_37'
 #identifier = '07_05_2024_12_31_08'
+#identifier = '07_05_2024_12_32_41'
 mapdata_path = f'{os.getcwd()}/map_data/'
 setting_path = f'{os.getcwd()}/map_settings.yaml'
 logging_path = f'{os.getcwd()}/mission_logs/'
@@ -21,7 +22,6 @@ center_enc = [center[0] + size[0]/2, center[1] + size[1]/2]
 
 position = pl.read_position(identifier, logging_path)
 
-
 grid_position_x = []
 grid_position_y = []
 for i in range(len(position['x'])):
@@ -31,28 +31,31 @@ for i in range(len(position['x'])):
     grid_position_y.append(grid_coordinate[1])
 
 # Sorting data to ensure no weird backtracking when plotting
-'''
+
 data = list(zip(grid_position_x, grid_position_y))
 data.sort()  # Sort by the first element of each tuple (x-coordinate)
 grid_position_x, grid_position_y = zip(*data)
+
+'''
+    if waypoints['seq'][i] == 1:
+        continue
 '''
 
 waypoints = pl.read_waypoints(identifier, logging_path)
+
 grid_waypoints_x = []
 grid_waypoints_y = []
+
 print(len(waypoints['seq']))
 for i in range(len(waypoints['seq'])):
-    if waypoints['seq'][i] == 1:
-        continue
     utm_coordinate = [waypoints['x'][i], waypoints['y'][i]]
     grid_coordinate = cc.utm33_to_grid(utm_coordinate[0], utm_coordinate[1], size, center)
     grid_waypoints_x.append(grid_coordinate[0])
     grid_waypoints_y.append(grid_coordinate[1])
 # Sorting data to ensure no weird backtracking when plotting
-#data = list(zip(grid_waypoints_x, grid_waypoints_y))
-#data.sort()  # Sort by the first element of each tuple (x-coordinate)
-#grid_waypoints_x, grid_waypoints_y = zip(*data)
-
+data = list(zip(grid_waypoints_x, grid_waypoints_y))
+data.sort()  # Sort by the first element of each tuple (x-coordinate)
+grid_waypoints_x, grid_waypoints_y = zip(*data)
 
 
 # Extracting ENC data to get accurate background
