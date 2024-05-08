@@ -20,9 +20,7 @@ def read_config(identifier, logpath):
             size = (int(size0), int(size1))
             center = (float(center0), float(center1))
             target = (float(target0), float(target1))
-            print(f'Algorithm: ' + algo)
-            print(f'Note: ' + note)
-    return size, center
+    return size, center, algo, target, note
 
 
 def read_position(identifier, logpath):
@@ -90,7 +88,7 @@ def plot_mission(enc_settings, identifier, logpath):
     '''
 
     # Reading the mission logs
-    size, startpos    = read_config(identifier, logpath)
+    size, startpos, algo, target, note    = read_config(identifier, logpath)
     center = center =  [startpos[0] + size[0]/2, startpos[1] + size[1]/2]
     waypoints = read_waypoints(identifier, logpath)
     position  = read_position(identifier, logpath)

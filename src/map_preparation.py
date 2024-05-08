@@ -160,14 +160,14 @@ def map_visualization(polygon_coords, saveas=None):
         #plt.show()
 
 
-def occupancy_grid_map(path, size, buffer_size=None, visualize=False, saveas=None):
+def occupancy_grid_map(path, size, buffer_size=None, visualize=False, saveas=None, landshore='land'):
     '''
     Creates an occupancy grid map given a set of land polygons
     '''
     algo_start = time.time()
     print('Map functions - Creating occupancy grid map.')
     occupancy_grid = np.zeros((size[0], size[1]), dtype=np.uint8)
-    with open(f'{path}/land_polygon_coords.csv', 'r', encoding='UTF-8') as file:
+    with open(f'{path}/{landshore}_polygon_coords.csv', 'r', encoding='UTF-8') as file:
         poly_list = csv.reader(file)
         coords = []
         # Convert string in csv to float
