@@ -7,7 +7,7 @@ import numpy as np
 import time
 import os
 
-algorithm = 'rrtstar'
+algorithm = 'astar'
 
 # Filepath for settings and mapsaves:
 mapdata_path = f'{os.getcwd()}/map_data/'
@@ -16,13 +16,13 @@ logging_path = f'{os.getcwd()}/mission_logs/'
 
 
 # Defining map size and center
-size   = [2000, 2000]
-center = [252555.72326179774, 7035808.149017857] # Centered on current position
+size   = [8000,8000]
+center = [265700.2783430953,7036667.912092576] # Centered on current position
 center_enc =  [center[0] + size[0]/2, center[1] + size[1]/2] # Centered on current position
 uf.configure_enc(setting_path, center=center_enc, size=size) # Updating .yaml file
 
-utm33_current_position = (253558.63731427345, 7036807.734086929)
-utm33_home_position = (253440.49996589732, 7036954.186699727)
+utm33_current_position = (269700.247644207, 7040667.903130587)
+utm33_home_position = (270648.0585201518,7041538.253568805)
 
 
 

@@ -132,6 +132,12 @@ def euclidean_distance_sqrd(start, end):
 
 
 def astar(grid, start_position, end_position,size, timeout=999999999999):
+    factor = 10
+    size = (int(size[0]/factor), int(size[1]/factor))
+    grid = downscale_grid(grid, factor)
+    start_position = (int(start_position[0]/factor), int(start_position[1]/ factor))
+    end_position = (int(end_position[0] / factor), int(end_position[1]/factor))
+
     counter = 0
     astar_start = time.time()
     # Defining start- and end nodes:
@@ -159,7 +165,7 @@ def astar(grid, start_position, end_position,size, timeout=999999999999):
         # Checking if at goal
         if current_node == end_node:
             decimated_path = decimation_filter(backtrack_path(current_node, check_inclusion=True))
-            return decimated_path[::-1]  # Returning path
+            return upscale_path(decimated_path[::-1], factor)  # Returning path
 
 
         # Generating children at adjacent nodes
@@ -187,3 +193,25 @@ def astar(grid, start_position, end_position,size, timeout=999999999999):
             if counter % 500 == 0:
                 visualize_search(grid,closed_list, size)
             counter += 1
+
+
+def downscale_grid(grid, scale_factor):
+    from scipy.ndimage import zoom
+    # Ensure scale_factor is an integer
+    scale_factor = int(scale_factor)
+    
+    # Perform downscaling using scipy.ndimage.zoom
+    downscaled_grid = zoom(grid, 1/scale_factor, order=0)  # order=0 for nearest-neighbor interpolation (1s and 0s)
+    
+    # Threshold to convert back to binary occupancy grid
+    downscaled_grid = (downscaled_grid > 0.5).astype(int)
+    
+    return downscaled_grid
+
+
+def upscale_path(waypoints, factor):
+    upscaled = []
+    for point in waypoints:
+        upscaled.append((point[0]*factor, point[1]*factor))
+    return upscaled
+        

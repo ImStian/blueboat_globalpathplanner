@@ -206,11 +206,11 @@ def rrtstar(occupancy_grid, start_coords, end_coords):
  
     start = Node(start_coords[0],start_coords[1])
     end = Node(end_coords[0],end_coords[1])        # Adjust the coordinates of the end point as needed
-    max_iterations = 1500                          # Number of iterations
+    max_iterations = 300000000000                          # Number of iterations
     num_run = 5                                    # Number of paths to generate, chooses the one with lowest costs, runs the algorithm this many times
     bias = 0.05                                    # Bias towards end
-    delta = 90                                     # Stepsize
-    radius = 300                                   # Radius looking for closer parent node
+    delta = 50                                     # Stepsize
+    radius = 200                                   # Radius looking for closer parent node
     
 
     inverted_grid = 1 - occupancy_grid # inverting 1's and 0's land, making sure land will be black and sea will be white

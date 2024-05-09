@@ -57,6 +57,6 @@ def grid_to_wgs84(coordinate1, coordinate2, size, center, inverse=False):
 
 
 if __name__ == '__main__':
-    point = (63.3745096,10.0677783)
+    point = (63.4198142,10.383978)
     print(utm33_to_wgs84(point[0], point[1], inverse=True))
     

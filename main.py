@@ -95,19 +95,22 @@ if __name__ == '__main__':
             #mp.map_visualization(polygons_coords, saveas='map_visualization')
 
             # Generating occupancy grid:
-            occupancy_grid, coords = mp.occupancy_grid_map(mapdata_path, size, buffer_size=0, visualize=True, saveas='occupancy_grid')
-
+            algtime = time.time()
+            occupancy_grid, coords = mp.occupancy_grid_map(mapdata_path, size, buffer_size=15, visualize=True, saveas='occupancy_grid')
+            print(f'Occupancy grid - Calculation time: {time.time() - algtime}')
 
             # Path planning:
+            algtime = time.time()
             if args.algorithm == 'astar':
                 print('Pathplanning - Running A*')
-                path = astar.astar(occupancy_grid,start_coordinates,end_coordinates, size, timeout=120)
+                path = astar.astar(occupancy_grid,start_coordinates,end_coordinates, size, timeout=9999999999999999999999999999)
             elif args.algorithm == 'rrtstar':
                 print('Pathplanning - Running RRT*')
                 path = rrtstar.rrtstar(np.rot90(np.flip(np.array(occupancy_grid),0),3), start_coordinates, end_coordinates)
 
             print('Pathplanning - Path found! : ', len(path), ' waypoints')
             uf.plot_path(occupancy_grid, path, 'Path planning')
+            print(f'Pathplanning - Calculation time: {time.time() - algtime}')
 
             # Converting coordinates to WGS84 (latitude/longitude):
             print('Coordinate Conversion - Converting from Occupancy Grid-coordinates to WGS84.')
