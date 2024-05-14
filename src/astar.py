@@ -1,5 +1,6 @@
 from shapely.geometry import LineString
 import matplotlib.pyplot as plt
+from scipy.ndimage import zoom
 import numpy as np
 import math as m
 import heapq
@@ -132,7 +133,7 @@ def euclidean_distance_sqrd(start, end):
 
 
 def astar(grid, start_position, end_position,size, timeout=999999999999):
-    factor = 10
+    factor = 25
     size = (int(size[0]/factor), int(size[1]/factor))
     grid = downscale_grid(grid, factor)
     start_position = (int(start_position[0]/factor), int(start_position[1]/ factor))
@@ -196,16 +197,12 @@ def astar(grid, start_position, end_position,size, timeout=999999999999):
 
 
 def downscale_grid(grid, scale_factor):
-    from scipy.ndimage import zoom
     # Ensure scale_factor is an integer
     scale_factor = int(scale_factor)
-    
     # Perform downscaling using scipy.ndimage.zoom
     downscaled_grid = zoom(grid, 1/scale_factor, order=0)  # order=0 for nearest-neighbor interpolation (1s and 0s)
-    
     # Threshold to convert back to binary occupancy grid
     downscaled_grid = (downscaled_grid > 0.5).astype(int)
-    
     return downscaled_grid
 
 

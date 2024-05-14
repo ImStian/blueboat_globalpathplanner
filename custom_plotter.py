@@ -7,23 +7,15 @@ import numpy as np
 import os
 
 identifier = input('Enter identifier: ')
-#identifier = r'07_05_2024_10_41_37' # LONG DISTANCE TEST
-#identifier = '07_05_2024_12_32_41' # Around obstacle1
-identifier = '08_05_2024_14_57_22' # around obstacle2
-#identifier = '07_05_2024_12_34_46'
-identifier = r'08_05_2024_16_36_27' # bigboi
-identifier = r'08_05_2024_19_25_40' #astar nidelva
 mapdata_path = f'{os.getcwd()}/map_data/'
 setting_path = f'{os.getcwd()}/map_settings.yaml'
 logging_path = f'{os.getcwd()}/mission_logs/'
 
-
-
-
+# Reading Configuration Mission Log
 size, center, algo,  target, note =  pl.read_config(identifier, logging_path)
 center_enc = [center[0] + size[0]/2, center[1] + size[1]/2]
 
-
+# Reading Position Mission Log
 position = pl.read_position(identifier, logging_path)
 
 grid_position_x = []
@@ -36,16 +28,14 @@ for i in range(len(position['x'])):
 
 # Sorting data to ensure no weird backtracking when plotting
 
-#data = list(zip(grid_position_x, grid_position_y))
-#data.sort()  # Sort by the first element of each tuple (x-coordinate)
-#grid_position_x, grid_position_y = zip(*data)
+data = list(zip(grid_position_x, grid_position_y))
+data.sort()  # Sort by the first element of each tuple (x-coordinate)
+grid_position_x, grid_position_y = zip(*data)
 
-
+# Reading Waypoint Mission Log
 waypoints = pl.read_waypoints(identifier, logging_path)
-
 grid_waypoints_x = []
 grid_waypoints_y = []
-
 
 
 print(len(waypoints['seq']))
@@ -57,9 +47,10 @@ for i in range(len(waypoints['seq'])):
     grid_waypoints_x.append(grid_coordinate[0])
     grid_waypoints_y.append(grid_coordinate[1])
 # Sorting data to ensure no weird backtracking when plotting
-#data = list(zip(grid_waypoints_x, grid_waypoints_y))
-#data.sort()  # Sort by the first element of each tuple (x-coordinate)
-#grid_waypoints_x, grid_waypoints_y = zip(*data)
+data = list(zip(grid_waypoints_x, grid_waypoints_y))
+data.sort()  # Sort by the first element of each tuple (x-coordinate)
+grid_waypoints_x, grid_waypoints_y = zip(*data)
+
 
 # Extracting ENC data to get accurate background
 uf.configure_enc(setting_path, center_enc, size)
@@ -78,7 +69,7 @@ plt.imshow(backdrop, cmap=plt.cm.colors.ListedColormap([color_map[i] for i in so
 
 # Drawing a line
 plt.plot(grid_waypoints_x, grid_waypoints_y, markersize=12, linewidth=2, c='orange', label='Path', linestyle='--')
-#plt.plot(grid_position_x, grid_position_y, markersize=12, linewidth=3, c='purple',  alpha=0.75, label='Position')
+plt.plot(grid_position_x, grid_position_y, markersize=12, linewidth=3, c='purple',  alpha=0.75, label='Position')
 
 # Highlighting all waypoints/position readings
 #plt.scatter(grid_position_x, grid_position_y, s=5, c='purple')

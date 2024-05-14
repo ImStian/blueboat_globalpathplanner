@@ -206,10 +206,10 @@ def rrtstar(occupancy_grid, start_coords, end_coords):
  
     start = Node(start_coords[0],start_coords[1])
     end = Node(end_coords[0],end_coords[1])        # Adjust the coordinates of the end point as needed
-    max_iterations = 300000000000                          # Number of iterations
+    max_iterations = 150000                          # Number of iterations
     num_run = 5                                    # Number of paths to generate, chooses the one with lowest costs, runs the algorithm this many times
     bias = 0.05                                    # Bias towards end
-    delta = 50                                     # Stepsize
+    delta = 60                                     # Stepsize
     radius = 200                                   # Radius looking for closer parent node
     
 
