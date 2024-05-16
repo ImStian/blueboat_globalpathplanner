@@ -53,7 +53,7 @@ This repository contains a global path planner for BlueRobotics' BlueBoat, desig
 - `custom_plotter.py`: Custom plotting utility for visualizing paths.
 - `main.py`: Main script to run the path planner.
 - `map_settings.yaml`: Configuration file for map settings.
-- `seacharts_plotter.py`: Plotter for sea charts.
+- `seacharts_plotter.py`: Plotter for SeaCharts.
 - `standalone_pathplanner.py`: Standalone version of the path planner.
 
 ## Contributing
