@@ -13,13 +13,13 @@ This repository contains a global path planner for BlueRobotics' BlueBoat, desig
   
 ## Installation
 
-1. **Clone the repository**:
+1. **Clone the Repository**:
     ```bash
     git clone https://github.com/ImStian/blueboat_globalpathplanner.git
     cd blueboat_globalpathplanner
     ```
 
-2. **Install dependencies**:
+2. **Install Dependencies**:
     - Ensure Python is installed. Install the required packages using:
     ```bash
     pip install -r requirements.txt
@@ -28,7 +28,7 @@ This repository contains a global path planner for BlueRobotics' BlueBoat, desig
 
 ## Usage
 
-1. **Prepare the environment**:
+1. **Prepare the Environment**:
     - Download Depth data from [GeoNorge](https://kartkatalog.geonorge.no/) using the file geodatabase fileformat.
     - Place your `.gdb` file in the root directory of the project. 
 
