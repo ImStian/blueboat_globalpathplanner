@@ -20,15 +20,25 @@ This repository contains a global path planner for BlueRobotics' BlueBoat, desig
     ```
 
 2. **Install dependencies**:
-    Ensure you have Python installed. Install the required packages using:
+    - Ensure Python is installed. Install the required packages using:
     ```bash
     pip install -r requirements.txt
     ```
+    - **In case of any issues related to missing libraries:** Follow installation guide for [SeaCharts](https://github.com/simbli/seacharts) and install any remaining dependencies manually.
 
 ## Usage
 
 1. **Prepare the environment**:
-    - Place your `.gdb` file in the root directory of the project.
+    - Download Depth data from [GeoNorge](https://kartkatalog.geonorge.no/) using the file geodatabase fileformat.
+    - Place your `.gdb` file in the root directory of the project. 
+
+2. **Connection**:
+   - Make sure that BlueBoat is configured with an additional client endpoint. Guide can be found [Here](https://blueos.cloud/docs/blueos/1.0/advanced-usage/#mavlink-endpoints)
+   - Alternatively, use the SITL simulator from ArduPilot, configured with an additional endpoint. This can be done using the `--out=<IP-adress>:<Port>` commandline-argument when starting SITL. SITL must run in the background at all times!
+     ```bash
+      python3 sim_vehicle.py -v Rover --out=127.0.0.1:14541
+      ```
+    - The connection object for this project is hardcoded in `main.py`, and is defined by the `the_connection`-variable. Make sure that the IP-address and port matches the one configured in BlueOS or SITL.
 
 2. **Run the Path Planner**:
     ```bash
