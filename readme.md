@@ -32,7 +32,7 @@ This repository contains a global path planner for BlueRobotics' BlueBoat, desig
     - Download Depth data from [GeoNorge](https://kartkatalog.geonorge.no/) using the file geodatabase fileformat.
     - Place your `.gdb` file in the root directory of the project. 
 
-2. **Connection**:
+2. **Communication**:
    - Make sure that BlueBoat is configured with an additional client endpoint. A guide can be found [here](https://blueos.cloud/docs/blueos/1.0/advanced-usage/#mavlink-endpoints).
    - Alternatively, use the SITL simulator from ArduPilot, configured with an additional endpoint. This can be done using the `--out=<IP-address>:<Port>` commandline-argument when starting SITL. SITL must run in the background at all times!
      ```bash
