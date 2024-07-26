@@ -1,0 +1,203 @@
+action-msgs==1.2.1
+action-tutorials-interfaces==0.20.3
+action-tutorials-py==0.20.3
+actionlib-msgs==4.2.3
+ament-black==0.2.4
+ament-cmake-test==1.3.8
+ament-copyright==0.12.10
+ament-cppcheck==0.12.10
+ament-cpplint==0.12.10
+ament-flake8==0.12.10
+ament-index-python==1.4.0
+ament-lint==0.12.10
+ament-lint-cmake==0.12.10
+ament-package==0.14.0
+ament-pep257==0.12.10
+ament-uncrustify==0.12.10
+ament-xmllint==0.12.10
+angles==1.15.0
+attrs @ file:///home/conda/feedstock_root/build_artifacts/attrs_1704011227531/work
+builtin-interfaces==1.2.1
+Cartopy @ file:///home/conda/feedstock_root/build_artifacts/cartopy_1698172745471/work
+Cerberus==1.3.5
+certifi @ file:///home/conda/feedstock_root/build_artifacts/certifi_1707022139797/work/certifi
+charset-normalizer==3.3.2
+click @ file:///home/conda/feedstock_root/build_artifacts/click_1692311806742/work
+click-plugins==1.1.1
+cligj @ file:///home/conda/feedstock_root/build_artifacts/cligj_1633637764473/work
+composition-interfaces==1.2.1
+contourpy @ file:///home/conda/feedstock_root/build_artifacts/contourpy_1699041375599/work
+cv-bridge==3.2.1
+cycler @ file:///home/conda/feedstock_root/build_artifacts/cycler_1696677705766/work
+decorator==5.1.1
+demo-nodes-py==0.20.3
+diagnostic-msgs==4.2.3
+diagnostic-updater==3.1.2
+domain-coordinator==0.10.0
+empy==3.3.4
+example-interfaces==0.9.3
+examples-rclpy-executors==0.15.1
+examples-rclpy-minimal-action-client==0.15.1
+examples-rclpy-minimal-action-server==0.15.1
+examples-rclpy-minimal-client==0.15.1
+examples-rclpy-minimal-publisher==0.15.1
+examples-rclpy-minimal-service==0.15.1
+examples-rclpy-minimal-subscriber==0.15.1
+fiona @ file:///home/conda/feedstock_root/build_artifacts/fiona_1709930683951/work
+fonttools @ file:///home/conda/feedstock_root/build_artifacts/fonttools_1708049097969/work
+future==1.0.0
+GDAL @ file:///home/conda/feedstock_root/build_artifacts/gdal-split_1710248096152/work/build/swig/python
+geocoder==1.38.1
+geographic-msgs==1.0.6
+geometry-msgs==4.2.3
+idna==3.6
+image-geometry==3.2.1
+interactive-markers==2.3.2
+kiwisolver @ file:///home/conda/feedstock_root/build_artifacts/kiwisolver_1695379920604/work
+laser-geometry==2.4.0
+launch==1.0.5
+launch-pytest==1.0.5
+launch-ros==0.19.7
+launch-testing==1.0.5
+launch-testing-ros==0.19.7
+launch-xml==1.0.5
+launch-yaml==1.0.5
+lifecycle-msgs==1.2.1
+llvmlite==0.42.0
+logging-demo==0.20.3
+lxml==5.1.0
+map-msgs==2.1.0
+matplotlib @ file:///home/conda/feedstock_root/build_artifacts/matplotlib-suite_1708026439111/work
+matplotlib-scalebar==0.8.1
+MAVProxy==1.8.70
+mavros==2.7.0
+mavros-msgs==2.7.0
+message-filters==4.3.3
+micro-ros-msgs==1.0.0
+munkres==1.1.4
+nav-msgs==4.2.3
+networkx==3.3
+numba==0.59.1
+numpy @ file:///home/conda/feedstock_root/build_artifacts/numpy_1707225376651/work/dist/numpy-1.26.4-cp311-cp311-linux_x86_64.whl#sha256=d08e1c9e5833ae7780563812aa73e2497db1ee3bd5510d3becb8aa18aa2d0c7c
+opencv-contrib-python==4.9.0.80
+osrf-pycommon==2.0.2
+packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1710075952259/work
+pandas==2.2.2
+pathfinding==1.0.9
+pcl-msgs==1.0.0
+pendulum-msgs==0.20.3
+pexpect==4.9.0
+pillow @ file:///home/conda/feedstock_root/build_artifacts/pillow_1704252032614/work
+plotly==5.20.0
+ply==3.11
+pqdict==1.4.0
+ptyprocess==0.7.0
+pyfastnoisesimd==0.4.2
+pymavlink==2.4.41
+pyparsing @ file:///home/conda/feedstock_root/build_artifacts/pyparsing_1709721012883/work
+pyproj @ file:///home/conda/feedstock_root/build_artifacts/pyproj_1702028054139/work
+PyQt5==5.15.9
+PyQt5-sip==12.12.2
+pyserial==3.5
+pyshp @ file:///home/conda/feedstock_root/build_artifacts/pyshp_1659002966020/work
+python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/python-dateutil_1709299778482/work
+python-qt-binding==1.1.2
+pytz==2024.1
+PyYAML==6.0.1
+qt-dotgraph==2.2.3
+qt-gui==2.2.3
+qt-gui-cpp==2.2.3
+qt-gui-py-common==2.2.3
+quality-of-service-demo-py==0.20.3
+ratelim==0.1.6
+rcl-interfaces==1.2.1
+rclpy==3.3.12
+rcutils==5.1.5
+requests==2.31.0
+resource-retriever==3.1.1
+rmw-dds-common==1.6.0
+ros2action==0.18.9
+ros2bag==0.15.9
+ros2cli==0.18.9
+ros2component==0.18.9
+ros2doctor==0.18.9
+ros2interface==0.18.9
+ros2launch==0.19.7
+ros2lifecycle==0.18.9
+ros2multicast==0.18.9
+ros2node==0.18.9
+ros2param==0.18.9
+ros2pkg==0.18.9
+ros2run==0.18.9
+ros2service==0.18.9
+ros2topic==0.18.9
+rosbag2-interfaces==0.15.9
+rosbag2-py==0.15.9
+rosgraph-msgs==1.2.1
+rosidl-adapter==3.1.5
+rosidl-cli==3.1.5
+rosidl-cmake==3.1.5
+rosidl-generator-c==3.1.5
+rosidl-generator-cpp==3.1.5
+rosidl-generator-py==0.14.4
+rosidl-parser==3.1.5
+rosidl-runtime-py==0.9.3
+rosidl-typesupport-c==2.0.1
+rosidl-typesupport-cpp==2.0.1
+rosidl-typesupport-fastrtps-c==2.2.2
+rosidl-typesupport-fastrtps-cpp==2.2.2
+rosidl-typesupport-introspection-c==3.1.5
+rosidl-typesupport-introspection-cpp==3.1.5
+rpyutils==0.2.1
+rqt-action==2.0.1
+rqt-bag==1.1.4
+rqt-bag-plugins==1.1.4
+rqt-console==2.0.3
+rqt-graph==1.3.0
+rqt-gui==1.1.7
+rqt-gui-py==1.1.7
+rqt-msg==1.2.0
+rqt-plot==1.1.2
+rqt-publisher==1.5.0
+rqt-py-common==1.1.7
+rqt-py-console==1.0.2
+rqt-reconfigure==1.1.2
+rqt-service-caller==1.0.5
+rqt-shell==1.0.2
+rqt-srv==1.0.3
+rqt-topic==1.5.0
+rrtplanner==0.1.2
+ruamel.yaml==0.18.6
+ruamel.yaml.clib==0.2.8
+scipy @ file:///home/conda/feedstock_root/build_artifacts/scipy-split_1706041487672/work/dist/scipy-1.12.0-cp311-cp311-linux_x86_64.whl#sha256=c4f0d8ecd4373069a033d0ee818c2fe5959c8828937fa46deb00a478190f703a
+seacharts==3.0.0
+sensor-msgs==4.2.3
+sensor-msgs-py==4.2.3
+shape-msgs==4.2.3
+shapely @ file:///home/conda/feedstock_root/build_artifacts/shapely_1708367927455/work
+sip @ file:///home/conda/feedstock_root/build_artifacts/sip_1697300428897/work
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
+sros2==0.10.4
+statistics-msgs==1.2.1
+std-msgs==4.2.3
+std-srvs==4.2.3
+stereo-msgs==4.2.3
+teleop-twist-keyboard==2.4.0
+tenacity==8.2.3
+tf2-geometry-msgs==0.25.6
+tf2-kdl==0.25.6
+tf2-msgs==0.25.6
+tf2-py==0.25.6
+tf2-ros-py==0.25.6
+tf2-tools==0.25.6
+toml @ file:///home/conda/feedstock_root/build_artifacts/toml_1604308577558/work
+tomli @ file:///home/conda/feedstock_root/build_artifacts/tomli_1644342247877/work
+topic-monitor==0.20.3
+tornado @ file:///home/conda/feedstock_root/build_artifacts/tornado_1708363099148/work
+tqdm==4.66.2
+trajectory-msgs==4.2.3
+turtlesim==1.4.2
+tzdata==2024.1
+unique-identifier-msgs==2.2.1
+urllib3==2.2.1
+visualization-msgs==4.2.3
